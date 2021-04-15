@@ -10,7 +10,7 @@ using SixBDigital.CarValeting.Infrastructure;
 namespace SixBDigital.CarValeting.Infrastructure.Migrations
 {
     [DbContext(typeof(SixBDigitalCarValetingContext))]
-    [Migration("20210415130724_Initial_Migration")]
+    [Migration("20210415214441_Initial_Migration")]
     partial class Initial_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,9 @@ namespace SixBDigital.CarValeting.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -92,9 +95,10 @@ namespace SixBDigital.CarValeting.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 4, 15, 13, 7, 22, 936, DateTimeKind.Utc).AddTicks(6939),
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$d0AbHWlRy2kl0qGAU9StQw$BJxxB7TFn/dn1Y1C3fwT/kiWUGoj9EOicGL+Ue6hL7Y",
-                            UpdatedAt = new DateTime(2021, 4, 15, 13, 7, 22, 936, DateTimeKind.Utc).AddTicks(6939),
+                            CreatedAt = new DateTime(2021, 4, 15, 21, 44, 41, 228, DateTimeKind.Utc).AddTicks(6473),
+                            Password = "8AwqGZ54BuaPUVXPLnBP//yVwCIjRBucXwW+jC2TCAG+qjfUCGntOH5uSeF6YcTfNDoAHLeEA/MuYmTjSVZJ3A==",
+                            Salt = "100000.bdTW4L9WQxTfQPTNSFrERXidO/gmO+dJoCi736xsrxIr0w==",
+                            UpdatedAt = new DateTime(2021, 4, 15, 21, 44, 41, 228, DateTimeKind.Utc).AddTicks(6473),
                             UserName = "admin"
                         });
                 });

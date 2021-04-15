@@ -37,7 +37,8 @@ namespace SixBDigital.CarValeting.Infrastructure.Migrations
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     UserName = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false)
+                    Password = table.Column<string>(nullable: false),
+                    Salt = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,8 +47,8 @@ namespace SixBDigital.CarValeting.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedAt", "Password", "UpdatedAt", "UserName" },
-                values: new object[] { 1, new DateTime(2021, 4, 15, 13, 7, 22, 936, DateTimeKind.Utc).AddTicks(6939), "$argon2id$v=19$m=65536,t=3,p=1$d0AbHWlRy2kl0qGAU9StQw$BJxxB7TFn/dn1Y1C3fwT/kiWUGoj9EOicGL+Ue6hL7Y", new DateTime(2021, 4, 15, 13, 7, 22, 936, DateTimeKind.Utc).AddTicks(6939), "admin" });
+                columns: new[] { "Id", "CreatedAt", "Password", "Salt", "UpdatedAt", "UserName" },
+                values: new object[] { 1, new DateTime(2021, 4, 15, 21, 44, 41, 228, DateTimeKind.Utc).AddTicks(6473), "8AwqGZ54BuaPUVXPLnBP//yVwCIjRBucXwW+jC2TCAG+qjfUCGntOH5uSeF6YcTfNDoAHLeEA/MuYmTjSVZJ3A==", "100000.bdTW4L9WQxTfQPTNSFrERXidO/gmO+dJoCi736xsrxIr0w==", new DateTime(2021, 4, 15, 21, 44, 41, 228, DateTimeKind.Utc).AddTicks(6473), "admin" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SixBDigital.CarValeting.Core.Entities;
 using SixBDigital.CarValeting.Core.Interfaces;
 
@@ -36,6 +40,16 @@ namespace SixBDigital.CarValeting.Infrastructure
             var entity = await _context.FindAsync<T>(id);
             _context.Remove(entity);
             await _context.SaveChangesAsync();
+        }
+        
+        public T GetBy(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().FirstOrDefault(predicate);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return _context.Set<T>();
         }
     }
 }

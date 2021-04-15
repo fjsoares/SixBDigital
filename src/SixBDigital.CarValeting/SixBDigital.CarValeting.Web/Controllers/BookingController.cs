@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SixBDigital.CarValeting.Core.Entities;
 using SixBDigital.CarValeting.Web.Factories;
 using SixBDigital.CarValeting.Core.Interfaces;
 using SixBDigital.CarValeting.Web.ViewModel;
@@ -8,10 +9,10 @@ namespace SixBDigital.CarValeting.Web.Controllers
 {
     public class BookingController : Controller
     {
-        private readonly IBookingService _bookingService;
+        private readonly IBookingService<Booking> _bookingService;
         private readonly BookingFactory _bookingFactory;
 
-        public BookingController(IBookingService bookingService, BookingFactory bookingFactory)
+        public BookingController(IBookingService<Booking> bookingService, BookingFactory bookingFactory)
         {
             _bookingService = bookingService;
             _bookingFactory = bookingFactory;
@@ -37,14 +38,7 @@ namespace SixBDigital.CarValeting.Web.Controllers
 
             await _bookingService.CreateBookingAsync(bookingDto);
 
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return Index();
-            }
+            return View("CreateSuccess");
         }
     }
 }

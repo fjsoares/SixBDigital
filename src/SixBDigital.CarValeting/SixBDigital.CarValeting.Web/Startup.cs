@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SixBDigital.CarValeting.Core.Entities;
 using SixBDigital.CarValeting.Core.Factories;
 using SixBDigital.CarValeting.Core.Interfaces;
 using SixBDigital.CarValeting.Core.Services;
@@ -33,10 +35,16 @@ namespace SixBDigital.CarValeting.Web
                     .UseSqlServer(connectionString, x => x.EnableRetryOnFailure());
             });
 
-            services.AddTransient<IBookingService, BookingService>();
+            services.AddTransient<IBookingService<Booking>, BookingService>();
+            services.AddTransient<IUserService<User>, UserService>();
             services.AddTransient<BookingFactory>();
+            services.AddTransient<UserFactory>();
             services.AddTransient<Factories.BookingFactory>();
             services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
+
+            services
+                .AddAuthentication(IdentityConstants.ApplicationScheme)
+                .AddCookie(IdentityConstants.ApplicationScheme);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +65,7 @@ namespace SixBDigital.CarValeting.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,0 +1,45 @@
+﻿@using SixBDigital.CarValeting.Web.ViewModel
+@model SixBDigital.CarValeting.Web.ViewModel.BookingViewModel
+
+@using (Html.BeginForm("EditBooking", "Admin", FormMethod.Post))
+{
+    @Html.HiddenFor(e => e.Id)
+    @Html.ValidationSummary(true);
+
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, null, new { @style = "color:red" })
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.BookingDateTime)
+        @Html.TextBoxFor(m => m.BookingDateTime, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.BookingDateTime, null, new { @style = "color:red" })
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Flexibility)
+        @Html.ValidationMessageFor(m => m.Flexibility, null, new { @style = "color:red" })
+        <select asp-for="Flexibility" asp-items="Html.GetEnumSelectList<Flexibility>()" class="form-control"></select>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.VehicleSize)
+        @Html.ValidationMessageFor(m => m.VehicleSize, null, new { @style = "color:red" })
+        <select asp-for="VehicleSize" asp-items="Html.GetEnumSelectList<VehicleSize>()" class="form-control"></select>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.ContactNumber)
+        @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ContactNumber, null, new { @style = "color:red" })
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.EmailAddress)
+        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EmailAddress, null, new { @style = "color:red" })
+    </div>
+    <input type="submit" value="Submit" />
+}

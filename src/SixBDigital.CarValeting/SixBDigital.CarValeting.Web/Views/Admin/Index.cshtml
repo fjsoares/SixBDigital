@@ -1,0 +1,71 @@
+﻿
+@model SixBDigital.CarValeting.Web.ViewModel.AdminBookingsViewModel
+
+<h1>All Bookings</h1>
+<br />
+<div>
+    <a asp-controller="Booking" asp-action="Index">Create a new booking</a>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Booking Date</th>
+            <th>Flexibility</th>
+            <th>Vehicle Size</th>
+            <th>Contact Number</th>
+            <th>Email Address</th>
+            <th>Actions</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model.BookingViewModel)
+        {
+        <tr>
+            <td>@Html.DisplayFor(m => booking.Name)</td>
+            <td>@booking.BookingDateTime.ToShortDateString()</td>
+            <td>@Html.DisplayFor(m => booking.Flexibility)</td>
+            <td>@Html.DisplayFor(m => booking.VehicleSize)</td>
+            <td>@Html.DisplayFor(m => booking.ContactNumber)</td>
+            <td>@Html.DisplayFor(m => booking.EmailAddress)</td>
+
+            <td>
+                @using (Html.BeginForm("Edit", "Admin", new { id = booking.Id }, FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-warning">
+                        Edit
+                    </button>
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete", "Admin", new { id = booking.Id }, FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                }
+            <td>
+                @using (Html.BeginForm("ToggleApproval", "Admin", new { id = booking.Id }, FormMethod.Post))
+                {
+                    @if (booking.Approved)
+                    {
+                        <button type="submit" class="btn btn-outline-dark">
+                            Not approved
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-outline-success">
+                            Approve
+                        </button>
+                    }
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

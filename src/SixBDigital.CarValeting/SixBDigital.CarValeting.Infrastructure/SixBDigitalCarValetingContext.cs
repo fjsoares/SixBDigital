@@ -1,6 +1,6 @@
 ﻿using System;
-using Isopoh.Cryptography.Argon2;
 using Microsoft.EntityFrameworkCore;
+using SimpleCrypto;
 using SixBDigital.CarValeting.Core.Entities;
 
 namespace SixBDigital.CarValeting.Infrastructure
@@ -35,6 +35,10 @@ namespace SixBDigital.CarValeting.Infrastructure
 
             var creation = DateTime.UtcNow;
 
+            var cryptoService = new PBKDF2();
+            var salt = cryptoService.GenerateSalt();
+            string hashedPassword = cryptoService.Compute("l7iM007iD9o", salt);
+
             modelBuilder.Entity<User>(builder =>
             {
                 builder.Property(x => x.Id).IsRequired().Metadata.IsPrimaryKey();
@@ -44,7 +48,8 @@ namespace SixBDigital.CarValeting.Infrastructure
                 {
                     Id = 1,
                     UserName = "admin",
-                    Password = Argon2.Hash("l7iM007iD9o"),
+                    Password = hashedPassword,
+                    Salt = salt,
                     CreatedAt = creation,
                     UpdatedAt = creation
                 });
