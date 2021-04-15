@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SixBDigital.CarValeting.Web.ViewModel
 {
-    public class CreateBooking
+    public class CreateBookingViewModel
     {
         [Required(ErrorMessage = "Please enter your name"), Display(Name = "Name")]
         public string Name { get; set; }

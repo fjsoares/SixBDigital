@@ -8,17 +8,17 @@ namespace SixBDigital.CarValeting.Web.Controllers
         // GET: Booking
         public ActionResult Index()
         {
-            return View(new CreateBooking());
+            return View(new CreateBookingViewModel());
         }
 
         // POST: Booking/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(CreateBooking createBooking)
+        public ActionResult Index(CreateBookingViewModel createBookingViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(createBooking);
+                return View(createBookingViewModel);
             }
 
             try
