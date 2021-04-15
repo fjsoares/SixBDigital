@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using SixBDigital.CarValeting.Core.DTOs;
 
 namespace SixBDigital.CarValeting.Core.Interfaces
 {
     public interface IBookingService
     {
-        public Task<int> CreateBooking() { get; set; }
+        Task<int> CreateBookingAsync(CreateBookingDTO createBooking);
     }
 }

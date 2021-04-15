@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SixBDigital.CarValeting.Core.Factories;
+using SixBDigital.CarValeting.Core.Interfaces;
+using SixBDigital.CarValeting.Core.Services;
 using SixBDigital.CarValeting.Infrastructure;
 
 namespace SixBDigital.CarValeting.Web
@@ -29,6 +32,11 @@ namespace SixBDigital.CarValeting.Web
                 options.UseLoggerFactory(sp.GetService<ILoggerFactory>())
                     .UseSqlServer(connectionString, x => x.EnableRetryOnFailure());
             });
+
+            services.AddTransient<IBookingService, BookingService>();
+            services.AddTransient<BookingFactory>();
+            services.AddTransient<Factories.BookingFactory>();
+            services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

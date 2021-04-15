@@ -9,7 +9,7 @@ namespace SixBDigital.CarValeting.Web.ViewModel
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please enter a booking date"), Display(Name = "Booking Date Time")]
-        public DateTime BookingDate { get; set; } = DateTime.Now;
+        public DateTime BookingDateTime { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Please set your flexibility"), Display(Name = "Flexibility")]
         public Flexibility Flexibility { get; set; }
