@@ -9,8 +9,10 @@ using Microsoft.Extensions.Logging;
 using SixBDigital.CarValeting.Core.Entities;
 using SixBDigital.CarValeting.Core.Factories;
 using SixBDigital.CarValeting.Core.Interfaces;
+using SixBDigital.CarValeting.Core.Models;
 using SixBDigital.CarValeting.Core.Services;
 using SixBDigital.CarValeting.Infrastructure;
+using SixBDigital.CarValeting.Infrastructure.Email;
 
 namespace SixBDigital.CarValeting.Web
 {
@@ -37,10 +39,13 @@ namespace SixBDigital.CarValeting.Web
 
             services.AddTransient<IBookingService<Booking>, BookingService>();
             services.AddTransient<IUserService<User>, UserService>();
+            services.AddTransient<IEmailClient, EmailClient>();
             services.AddTransient<BookingFactory>();
             services.AddTransient<UserFactory>();
             services.AddTransient<Factories.BookingFactory>();
             services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
+
+            services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
 
             services
                 .AddAuthentication(IdentityConstants.ApplicationScheme)

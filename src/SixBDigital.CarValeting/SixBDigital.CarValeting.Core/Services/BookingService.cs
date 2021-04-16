@@ -14,11 +14,13 @@ namespace SixBDigital.CarValeting.Core.Services
     public class BookingService : IBookingService<Booking>
     {
         private readonly IRepository<Booking> _bookingRepository;
+        private readonly IEmailClient _emailClient;
         private readonly BookingFactory _bookingFactory;
 
-        public BookingService(IRepository<Booking> bookingRepository, BookingFactory bookingFactory)
+        public BookingService(IRepository<Booking> bookingRepository, IEmailClient emailClient, BookingFactory bookingFactory)
         {
             _bookingRepository = bookingRepository;
+            _emailClient = emailClient;
             _bookingFactory = bookingFactory;
         }
 
@@ -66,6 +68,17 @@ namespace SixBDigital.CarValeting.Core.Services
             if (booking != null)
             {
                 booking.Approved = !booking.Approved;
+
+                if (booking.Approved)
+                {
+                    booking.NumberOfToggleApproval++;
+                }
+
+                if (booking.NumberOfToggleApproval == 1)
+                {
+                    Task.Run(() => _emailClient.SendApprovedEmail(booking.Id, booking.Name, booking.EmailAddress));
+                }
+
                 await _bookingRepository.UpdateAsync(booking);
             }
         }

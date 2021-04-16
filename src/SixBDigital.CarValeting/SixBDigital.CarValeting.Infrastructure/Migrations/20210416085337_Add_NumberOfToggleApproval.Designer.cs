@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SixBDigital.CarValeting.Infrastructure;
 
 namespace SixBDigital.CarValeting.Infrastructure.Migrations
 {
     [DbContext(typeof(SixBDigitalCarValetingContext))]
-    partial class SixBDigitalCarValetingContextModelSnapshot : ModelSnapshot
+    [Migration("20210416085337_Add_NumberOfToggleApproval")]
+    partial class Add_NumberOfToggleApproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

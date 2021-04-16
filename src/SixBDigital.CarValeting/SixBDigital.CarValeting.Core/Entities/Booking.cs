@@ -9,8 +9,9 @@ namespace SixBDigital.CarValeting.Core.Entities
         public DateTime BookingDateTime { get; internal set; }
         public Flexibility Flexibility { get; internal set; }
         public VehicleSize VehicleSize { get; internal set; }
-        public string ContactNumber { get; internal set; } = string.Empty;
-        public string EmailAddress { get; internal set; } = string.Empty;
+        public string ContactNumber { get; internal set; }
+        public string EmailAddress { get; internal set; }
         public bool Approved { get; internal set; }
+        public int NumberOfToggleApproval { get; internal set; }
     }
 }
