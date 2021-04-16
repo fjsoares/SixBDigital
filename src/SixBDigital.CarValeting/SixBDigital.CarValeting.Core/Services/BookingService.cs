@@ -84,7 +84,7 @@ namespace SixBDigital.CarValeting.Core.Services
         /// Update booking
         /// </summary>
         /// <param name="updateBooking"></param>
-        /// <returns></returns>
+        /// <returns>Updated booking</returns>
         public async Task<BookingDTO> UpdateBooking(UpdateBookingDTO updateBooking)
         {
             if (updateBooking == null)
@@ -103,6 +103,11 @@ namespace SixBDigital.CarValeting.Core.Services
             return _bookingFactory.CreateBookingDTO(updated);
         }
 
+        /// <summary>
+        /// Get a booking given the id
+        /// </summary>
+        /// <param name="id">Id of the booking</param>
+        /// <returns>Booking</returns>
         public async Task<BookingDTO> GetBookingAsync(int id)
         {
             var booking = await _bookingRepository.GetAsync(id);

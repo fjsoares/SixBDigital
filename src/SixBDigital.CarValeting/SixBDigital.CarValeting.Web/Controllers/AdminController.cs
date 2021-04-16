@@ -106,5 +106,12 @@ namespace SixBDigital.CarValeting.Web.Controllers
             await _bookingService.DeleteBookingAsync(id);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

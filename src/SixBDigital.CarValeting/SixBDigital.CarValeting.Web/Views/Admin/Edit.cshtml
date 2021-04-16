@@ -1,6 +1,10 @@
 ﻿@using SixBDigital.CarValeting.Web.ViewModel
 @model SixBDigital.CarValeting.Web.ViewModel.BookingViewModel
 
+@{
+    ViewData["Title"] = "Admin - Edit booking";
+}
+
 @using (Html.BeginForm("EditBooking", "Admin", FormMethod.Post))
 {
     @Html.HiddenFor(e => e.Id)
@@ -41,5 +45,8 @@
         @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EmailAddress, null, new { @style = "color:red" })
     </div>
-    <input type="submit" value="Submit" />
+
+    <br />
+
+    <input type="submit" value="Submit" class="btn btn-primary" />
 }

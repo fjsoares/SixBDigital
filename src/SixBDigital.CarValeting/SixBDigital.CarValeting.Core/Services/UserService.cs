@@ -23,7 +23,7 @@ namespace SixBDigital.CarValeting.Core.Services
         /// </summary>
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
-        /// <returns></returns>
+        /// <returns>If password matches</returns>
         public bool IsPasswordValid(string username, string password)
         {
             var user = _userFactory.CreateNewUser(username, password);
