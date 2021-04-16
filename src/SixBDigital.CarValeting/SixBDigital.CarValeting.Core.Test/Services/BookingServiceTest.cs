@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using FluentValidation;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 using SixBDigital.CarValeting.Core.DTOs;
 using SixBDigital.CarValeting.Core.Entities;
+using SixBDigital.CarValeting.Core.Factories;
 using SixBDigital.CarValeting.Core.Interfaces;
 using SixBDigital.CarValeting.Core.Services;
 using SixBDigital.CarValeting.Core.Test.Attributes;
@@ -132,6 +136,107 @@ namespace SixBDigital.CarValeting.Core.Test.Services
             // ASSERT
 
             result.Should().Be(1);
+        }
+
+        [Theory]
+        [AutoMockedData]
+        public void GetAllBookings_ShouldReturnAllBookings_WhenThereIsRecords(
+            List<Booking> bookings,
+            [Frozen] IRepository<Booking> bookingRepository,
+            BookingService bookingService)
+        {
+            // ARRANGE
+
+            bookingRepository.GetAll().Returns(bookings);
+
+            // ACT
+
+            var result = bookingService.GetAllBookings();
+
+            // ASSERT
+
+            result.Should().HaveCount(3);
+            result.Should().BeEquivalentTo(bookings.Select(x => new BookingFactory().CreateBookingDTO(x)));
+        }
+
+        [Theory]
+        [AutoMockedData]
+        public async Task ToggleApprovalAsync_ShouldNotToggle_WhenThereBookingIsNotFoundInTheDatabase(
+            int id,
+            [Frozen] IRepository<Booking> bookingRepository,
+            BookingService bookingService)
+        {
+            // ARRANGE
+
+            bookingRepository.GetAsync(id).ReturnsNull();
+
+            // ACT
+
+            await bookingService.ToggleApprovalAsync(id);
+
+            // ASSERT
+
+            await bookingRepository.Received(0).UpdateAsync(Arg.Any<Booking>());
+        }
+
+        [Theory]
+        [AutoMockedData]
+        public async Task ToggleApprovalAsync_ShouldToggle_WhenThereBookingInTheDatabase(
+            Booking booking,
+            [Frozen] IRepository<Booking> bookingRepository,
+            BookingService bookingService)
+        {
+            // ARRANGE
+
+            bookingRepository.GetAsync(booking.Id).Returns(booking);
+
+            // ACT
+
+            await bookingService.ToggleApprovalAsync(booking.Id);
+
+            // ASSERT
+
+            await bookingRepository.Received(1).UpdateAsync(booking);
+        }
+
+        [Theory]
+        [AutoMockedData]
+        public void GetBookingAsync_ShouldThrowArgumentException_WhenIdIsNotFound(
+            int id,
+            [Frozen] IRepository<Booking> bookingRepository,
+            BookingService bookingService)
+        {
+            // ARRANGE
+            bookingRepository.GetAsync(id).ReturnsNull();
+
+            // ACT
+
+            Func<Task<BookingDTO>> result = async () => await bookingService.GetBookingAsync(id);
+
+            // ASSERT
+
+            result.Should().Throw<ArgumentException>()
+                .WithMessage("*id*");
+        }
+
+        [Theory]
+        [AutoMockedData]
+        public async Task GetBookingAsync_ShouldReturnBooking_WhenIdIsIsFound(
+            Booking booking,
+            [Frozen] IRepository<Booking> bookingRepository,
+            BookingService bookingService)
+        {
+            // ARRANGE
+            bookingRepository.GetAsync(booking.Id).Returns(booking);
+
+            // ACT
+
+            var result = await bookingService.GetBookingAsync(booking.Id);
+
+            // ASSERT
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(new BookingFactory().CreateBookingDTO(booking));
         }
 
     }

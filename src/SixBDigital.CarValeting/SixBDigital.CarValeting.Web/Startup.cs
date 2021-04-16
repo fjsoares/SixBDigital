@@ -48,7 +48,7 @@ namespace SixBDigital.CarValeting.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SixBDigitalCarValetingContext dataContext)
         {
             if (env.IsDevelopment())
             {
@@ -74,6 +74,8 @@ namespace SixBDigital.CarValeting.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            dataContext.Database.Migrate();
         }
     }
 }

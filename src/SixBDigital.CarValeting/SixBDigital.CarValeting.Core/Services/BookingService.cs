@@ -112,6 +112,11 @@ namespace SixBDigital.CarValeting.Core.Services
         {
             var booking = await _bookingRepository.GetAsync(id);
 
+            if (booking == null)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
             return _bookingFactory.CreateBookingDTO(booking);
         }
 
