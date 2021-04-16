@@ -8,7 +8,7 @@
 ## Notes
 
 -	The database used for this implementation was SQL Server.
-- 	If you run the solution the migrations will be updated automatically.
+- 	If you run the solution the migrations will run automatically.
 
 ## Configuration
 
